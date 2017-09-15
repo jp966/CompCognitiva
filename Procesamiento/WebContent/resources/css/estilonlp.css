@@ -54,13 +54,62 @@ body{
 
 }
 
-.noun{
+/*CLASES PARA LAS CATEGORÍAS*/
+
+.noun, #noun {
 	background-color: green;
+	color:white;
 }
+
+.adjective, #adjective {
+	background-color: red;
+	color:white;
+}
+
+.verb, #verb {
+	background-color: grey;
+	color:white;
+}
+
+.adverb, #adverb {
+	background-color: orange;
+	color:white;
+}
+
+.pronoun, #pronoun {
+	background-color: blue;
+	color:white;
+}
+
+.conjunction, #conjunction {
+	background-color: yellow;
+}
+
+.cardinalnum, #cardinalnum {
+	background-color: black;
+	color:white;
+}
+
+.determiner, #determiner {
+	background-color: #00ff80;
+	color:white;
+}
+
+.preposition, #preposition {
+	background-color: #f90680;
+	color:white;
+}
+
+.to, #to{
+	background-color: #ac5353;
+	color:white;
+}
+
+/*FIN CLASESPARA CATEGORÍAS*/
 
 
 .display-checkbox{
-	display: block;
+	display: inline-block;
 }
 
 .btn-file {

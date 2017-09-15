@@ -47,12 +47,45 @@
 				<div class=col-md-12>
 					<form>
 						<div class="checkbox display-checkbox">
-							<label><input id="check-nouns" type="checkbox" name="nouns">Nouns</label>
+							<label><input id="check1" type="checkbox" name="noun"><span id="noun">Nouns</span></label>
 						</div>
 
 						<div class="checkbox display-checkbox">
-							<label><input id="check-adjectives" type="checkbox" name="adjectives">Adjetives</label>
+							<label><input type="checkbox" name="adjective"><span id="adjective">Adjectives</span></label>
 						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="verb"><span id="verb">Verbs</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="adverb"><span id="adverb">Adverbs</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="pronoun"><span id="pronoun">Pronouns</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="conjunction"><span id="conjunction">Coordinating Conjunctions</span></label>
+						</div>
+						
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="cardinalnum"><span id="cardinalnum">Cardinal Numbers</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="determiner"><span id="determiner">Determiners</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="preposition"><span id="preposition">Prepositions</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="to"><span id="to">To</span></label>
+						</div>
+
 					</form>
 				</div>
 			</div>

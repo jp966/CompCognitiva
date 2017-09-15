@@ -6,6 +6,11 @@ $(document).ready(function(){
 	$(document).on("change","#upload",function(event){
 		event.preventDefault();		
 		
+		//se le quitará al checked a todos los input de tipo checkbox
+		$('input[type=checkbox]').each(function(){ 
+			this.checked = false; 
+		}); 
+
 		var archivo = event.target.files[0];
 
  		var reader = new FileReader();

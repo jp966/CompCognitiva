@@ -45,10 +45,57 @@ public class pos extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String tag = request.getParameter("categoria");
-		String respuesta="";
 
+		String [] array=null;
+
+		//arreglo con las categorías
+		String [] categorias ={"noun","adjective","verb","adverb","pronoun","conjunction","cardinalnum","determiner"
+			,"preposition","to"};
+
+		if(tag.equals("noun")){
 		//arreglo con las categorias de sustantivos
-		String [] arrayNouns={"NN","NNS","NNP","NNPS"};
+			array=new String[] {"NN","NNS","NNP","NNPS"};
+		}
+
+		if(tag.equals("adjective")){
+		//arreglo con las categorias de adjetivos
+			array=new String[] {"JJ","JJR","JJS"};
+		}
+
+		if(tag.equals("verb")){
+		//arreglo con las categorias de verbos
+			array=new String[] {"VB","VBD","VBG","VBN","VBP","VBZ"};
+		}
+
+		if(tag.equals("adverb")){
+		//arreglo con las categorias de adverbios
+			array=new String[] {"RB","RBR","RBS","WRB"};
+		}
+
+		if(tag.equals("pronoun")){
+		//arreglo con las categorías de pronombres
+			array=new String[] {"PRP","PRP$","WP","WP$"};
+		}
+
+		if(tag.equals("conjunction")){
+			array=new String[] {"CC"};
+		}
+
+		if(tag.equals("cardinalnum")){
+			array=new String[] {"CD"};
+		}
+
+		if(tag.equals("determiner")){
+			array=new String[] {"DT","WDT"};
+		}
+
+		if(tag.equals("preposition")){
+			array=new String[] {"IN"};
+		}
+
+		if(tag.equals("to")){
+			array=new String[] {"TO"};
+		}
 		
 	
        //Obtener json del archivo y hacer un arreglo con las palabras pertenecientes a la categoría
@@ -59,25 +106,59 @@ public class pos extends HttpServlet {
 			//arreglo de palabras del documento
 			JSONArray palabras = (JSONArray) a.get("palabras");
 			
-			//si lo que se desea marcar en el texto son los NN
-			if(tag.equals("nouns")){
+			for(int k=0;k<categorias.length;k++){			
+				if(tag.equals(categorias[k])){
+
+					String respuesta="";
+
+					for(int i=0;i<palabras.size();i++){
+						
+						JSONObject palabra1=(JSONObject) palabras.get(i);
+						String categoria=(String) palabra1.get("categoria");
+						
+						for(int j=0;j<array.length;j++){
+
+							if(categoria.equals(array[j])){
+								String palabra=(String) palabra1.get("palabra");
+								respuesta+=palabra+"_"+categorias[k]+",";
+								break;
+							}
+						}			
+					}
+					
+					if(respuesta.length()>0){
+						respuesta=respuesta.substring(0, respuesta.length()-1);
+					}else{
+						respuesta="";
+					}
+					
+
+					response.setContentType("text/plain");
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().write(respuesta);
+				}
+			}
+
+			/*
+			//SI LO QUE SE DESEA MARCAR EN EL TEXTO SON LOS ADJETIVOS
+
+			if(tag.equals("adjectives")){
+
+				String respuesta="";
 
 				for(int i=0;i<palabras.size();i++){
 					
 					JSONObject palabra1=(JSONObject) palabras.get(i);
 					String categoria=(String) palabra1.get("categoria");
 					
-					for(int j=0;j<arrayNouns.length;j++){
+					for(int j=0;j<arrayAdj.length;j++){
 
-						if(categoria.equals(arrayNouns[j])){
+						if(categoria.equals(arrayAdj[j])){
 							String palabra=(String) palabra1.get("palabra");
-							respuesta+=palabra+"_noun,";
+							respuesta+=palabra+"_adjective,";
 							break;
 						}
-					}
-					
-					
-					
+					}			
 				}
 				
 				respuesta=respuesta.substring(0, respuesta.length()-1);
@@ -86,6 +167,91 @@ public class pos extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(respuesta);
 			}
+
+			//SI LO QUE SE DESEA MARCAR EN EL TEXTO SON LOS VERBOS
+
+			if(tag.equals("verbs")){
+
+				String respuesta="";
+
+				for(int i=0;i<palabras.size();i++){
+					
+					JSONObject palabra1=(JSONObject) palabras.get(i);
+					String categoria=(String) palabra1.get("categoria");
+					
+					for(int j=0;j<arrayVerb.length;j++){
+
+						if(categoria.equals(arrayVerb[j])){
+							String palabra=(String) palabra1.get("palabra");
+							respuesta+=palabra+"_verb,";
+							break;
+						}
+					}			
+				}
+				
+				respuesta=respuesta.substring(0, respuesta.length()-1);
+				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(respuesta);
+			}
+
+			//SI LO QUE SE DESEA MARCAR EN EL TEXTO SON LOS ADVERBIOS
+			if(tag.equals("adverbs")){
+
+				String respuesta="";
+
+				for(int i=0;i<palabras.size();i++){
+					
+					JSONObject palabra1=(JSONObject) palabras.get(i);
+					String categoria=(String) palabra1.get("categoria");
+					
+					for(int j=0;j<arrayAdverb.length;j++){
+
+						if(categoria.equals(arrayAdverb[j])){
+							String palabra=(String) palabra1.get("palabra");
+							respuesta+=palabra+"_adverb,";
+							break;
+						}
+					}			
+				}
+				
+				respuesta=respuesta.substring(0, respuesta.length()-1);
+				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(respuesta);
+			}
+
+			//SI LO QUE DESEA MARCAR EN EL TEXTO SON LOS PRONOMBRES
+
+			if(tag.equals("pronouns")){
+
+				String respuesta="";
+
+				for(int i=0;i<palabras.size();i++){
+					
+					JSONObject palabra1=(JSONObject) palabras.get(i);
+					String categoria=(String) palabra1.get("categoria");
+					
+					for(int j=0;j<arrayPronoun.length;j++){
+
+						if(categoria.equals(arrayPronoun[j])){
+							String palabra=(String) palabra1.get("palabra");
+							respuesta+=palabra+"_pronoun,";
+							break;
+						}
+					}			
+				}
+				
+				respuesta=respuesta.substring(0, respuesta.length()-1);
+				
+				response.setContentType("text/plain");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(respuesta);
+			}
+
+			*/
 			
 			
 		} catch (ParseException e) {
