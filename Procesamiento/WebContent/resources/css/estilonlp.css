@@ -115,6 +115,41 @@ body{
 	color:white;
 }
 
+.existential, #existential{
+	background-color: #669999;
+	color:white;
+}
+
+
+.listItem, #listItem{
+	background-color: #cccc00;
+	color:white;
+}
+
+.modal, #modal{
+	background-color: #b30059;
+	color:white;
+}
+
+.predeterminer, #predeterminer{
+	background-color: #ff80aa;
+	color:white;
+}
+
+.particle, #particle{
+	background-color:#1f1f7a;
+	color:white;
+}
+
+.symbol, #symbol{
+	background-color: #663366;
+	color:white;
+}
+
+.interjection, #interjection{
+	background-color: #660000;
+	color:white;
+}
 /*FIN CLASES PARA TAGS*/
 
 

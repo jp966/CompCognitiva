@@ -93,6 +93,36 @@
 						<div class="checkbox display-checkbox">
 							<label><input type="checkbox" name="possessive"><span id="possessive">Possessive Endings</span></label>
 						</div>
+						
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="existential"><span id="existential">Existential there</span></label>
+						</div>
+
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="listItem"><span id="listItem">List item markers</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="modal"><span id="modal">Modals</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="predeterminer"><span id="predeterminer">Predeterminers</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="particle"><span id="particle">Particles</span></label>
+						</div>
+
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="symbol"><span id="symbol">Symbols</span></label>
+						</div>
+						
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="interjection"><span id="interjection">Interjections</span></label>
+						</div>
+
 
 					</form>
 				</div>

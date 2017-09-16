@@ -50,7 +50,8 @@ public class pos extends HttpServlet {
 
 		//arreglo con las categorías
 		String [] categorias ={"noun","adjective","verb","adverb","pronoun","conjunction","cardinalnum","determiner"
-			,"preposition","to","foreignword","possessive"};
+			,"preposition","to","foreignword","possessive","existential","listItem","modal","predeterminer","particle","symbol",
+			"interjection"};
 
 		if(tag.equals("noun")){
 		//arreglo con las categorias de sustantivos
@@ -103,6 +104,35 @@ public class pos extends HttpServlet {
 		
 		if(tag.equals("possessive")){
 			array=new String[] {"POS"};
+		}
+
+		if(tag.equals("existential")){
+			array=new String[] {"EX"};
+		}
+		
+		if(tag.equals("listItem")){
+			array=new String[] {"LS"};
+		}
+
+		if(tag.equals("modal")){
+			array=new String[] {"MD"};
+		}
+
+		if(tag.equals("predeterminer")){
+			array=new String[] {"PDT"};
+		}
+
+
+		if(tag.equals("particle")){
+			array=new String[] {"RP"};
+		}
+
+		if(tag.equals("symbol")){
+			array=new String[] {"SYM"};
+		}
+
+		if(tag.equals("interjection")){
+			array=new String[] {"UH"};
 		}
 		
 	
