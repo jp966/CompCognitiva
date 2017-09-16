@@ -50,7 +50,7 @@ public class pos extends HttpServlet {
 
 		//arreglo con las categorías
 		String [] categorias ={"noun","adjective","verb","adverb","pronoun","conjunction","cardinalnum","determiner"
-			,"preposition","to"};
+			,"preposition","to","foreignword","possessive"};
 
 		if(tag.equals("noun")){
 		//arreglo con las categorias de sustantivos
@@ -97,6 +97,14 @@ public class pos extends HttpServlet {
 			array=new String[] {"TO"};
 		}
 		
+		if(tag.equals("foreignword")){
+			array=new String[] {"FW"};
+		}
+		
+		if(tag.equals("possessive")){
+			array=new String[] {"POS"};
+		}
+		
 	
        //Obtener json del archivo y hacer un arreglo con las palabras pertenecientes a la categoría
 		JSONParser parser = new JSONParser();
@@ -114,6 +122,15 @@ public class pos extends HttpServlet {
 					for(int i=0;i<palabras.size();i++){
 						
 						JSONObject palabra1=(JSONObject) palabras.get(i);
+						
+						JSONObject palabra2=null;
+						//palabra anterior (aplicable al caso del 's)
+						
+						if(i>0){
+							palabra2=(JSONObject) palabras.get(i-1);
+						}
+
+						
 						String categoria=(String) palabra1.get("categoria");
 						
 						for(int j=0;j<array.length;j++){
@@ -122,7 +139,12 @@ public class pos extends HttpServlet {
 								String palabra=(String) palabra1.get("palabra");
 								//Aqui podria hacer algo
 								//si lleva 's->'s_categoria_palabra
-								respuesta+=palabra+"_"+categorias[k]+",";
+								if(palabra.equals("'s")){
+									respuesta+=palabra+"_"+categorias[k]+"_"+palabra2.get("palabra")+",";
+									System.out.println(palabra+"_"+categorias[k]+"_"+palabra2.get("palabra")+",");
+								}else{
+									respuesta+=palabra+"_"+categorias[k]+",";
+								}
 								break;
 							}
 						}			
@@ -134,7 +156,6 @@ public class pos extends HttpServlet {
 						respuesta="";
 					}
 					
-
 					response.setContentType("text/plain");
 					response.setCharacterEncoding("UTF-8");
 					response.getWriter().write(respuesta);

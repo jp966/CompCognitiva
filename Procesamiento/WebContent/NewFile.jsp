@@ -86,6 +86,14 @@
 							<label><input type="checkbox" name="to"><span id="to">To</span></label>
 						</div>
 
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="foreignword"><span id="foreignword">Foreign Words</span></label>
+						</div>
+						
+						<div class="checkbox display-checkbox">
+							<label><input type="checkbox" name="possessive"><span id="possessive">Possessive Endings</span></label>
+						</div>
+
 					</form>
 				</div>
 			</div>

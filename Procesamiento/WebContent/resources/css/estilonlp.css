@@ -54,7 +54,7 @@ body{
 
 }
 
-/*CLASES PARA LAS CATEGORÍAS*/
+/*CLASES PARA TAGS*/
 
 .noun, #noun {
 	background-color: green;
@@ -105,7 +105,17 @@ body{
 	color:white;
 }
 
-/*FIN CLASESPARA CATEGORÍAS*/
+.foreignword, #foreignword{
+	background-color: #c44dff;
+	color:white;
+}
+
+.possessive, #possessive{
+	background-color: #ff704d;
+	color:white;
+}
+
+/*FIN CLASES PARA TAGS*/
 
 
 .display-checkbox{
