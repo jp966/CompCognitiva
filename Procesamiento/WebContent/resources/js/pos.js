@@ -41,7 +41,28 @@ $(document).ready(function(){
 
 									//con esta expresión regular solo se tomarán las palabras completas, y no secciones de otras
 									var changing_value = arrayPalabras[i].split("_")[0];
-									var re = new RegExp("\\b" + changing_value + "\\b","g");
+									var re;
+
+									//ya que POS categoriza las palabras anteriores al 's, y a este ultimo como dos distintas
+									if( arrayPalabras[i+1].split("_")[0]=="'s"){
+										//se considera la palabra anterior al 's como una distinta
+										re = new RegExp("\\b" + changing_value,"g");
+									}else{
+
+										re = new RegExp("\\b" + changing_value + "\\b","g");
+									}
+
+									//si la palabra es un 's, entonces se considera como una distinta
+									if(arrayPalabras[i].split("_")[0]==" 's"){
+
+										re = new RegExp(changing_value + "\\b","g");
+									}else{
+										re = new RegExp("\\b" + changing_value + "\\b","g");
+									}
+
+
+									//Buscar traer la palabra anterior, para realizar una distincion entre las distinas 's
+									//COMPLETAR CON EL RESTO DE CATEGORÍAS-->POS TERMINADO
 
 									return html.replace(re,
 										"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");

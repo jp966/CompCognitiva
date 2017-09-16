@@ -120,6 +120,8 @@ public class pos extends HttpServlet {
 
 							if(categoria.equals(array[j])){
 								String palabra=(String) palabra1.get("palabra");
+								//Aqui podria hacer algo
+								//si lleva 's->'s_categoria_palabra
 								respuesta+=palabra+"_"+categorias[k]+",";
 								break;
 							}

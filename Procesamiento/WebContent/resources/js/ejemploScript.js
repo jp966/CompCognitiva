@@ -21,7 +21,7 @@ $(document).ready(function(){
 
   		//ELIMINACIÓN DE PUNTUACIÓN
   		var nuevoContenido = contenido;
-		var punctuationless = nuevoContenido.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		var punctuationless = nuevoContenido.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()/"/]/g,"");
 		var finalString = punctuationless.replace(/\s{2,}/g," ");
 
 		var arrayContenido=finalString.split(" ");

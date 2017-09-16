@@ -2,6 +2,7 @@ package ejercicios;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,43 +41,56 @@ public class ejemplo extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// reading the user input
 		    String texto[]= request.getParameterValues("texto[]");    
-		    String taggs[]=new String[texto.length];
+		    //String taggs[]=new String[texto.length];
+
+		    ArrayList<String> taggs = new ArrayList<String>();
+
 			//COPY DE EJEMPLO
 			MaxentTagger tagger = new MaxentTagger(
 			 
 			"C:/Users/Usuario/Desktop/Apache Tomcat/lib/taggers/english-caseless-left3words-distsim.tagger");
 			
-			
-			// The sample string
-			 
-			//String sample = "This is a sample text";
-			 
-			// The tagged string
-	
-			//*String tagged = tagger.tagString(texto);
+
+			//Se aplica POS de Stanford
 			
 			for(int i=0;i<texto.length;i++){
-				taggs[i]=tagger.tagString(texto[i]);
+
+				//taggs[i]=tagger.tagString(texto[i]);
+				taggs.add(tagger.tagString(texto[i]));
+
+				String str = taggs.get(i);
+
+				String[] splited = str.split("\\s+");
+
+				if(splited.length>1){
+					taggs.remove(i);
+					taggs.add(splited[0]);
+					taggs.add(splited[1]);
+				}
+
+				System.out.println(taggs.get(i));
 			}
 			
-			// Output the result
+			// Se busca en caso de que existan 's
+
+
 			
 			//*String respuesta=tagged;
 			String respuesta="{\"palabras\" : [";
 			
-			for(int i=0;i<taggs.length;i++){
+			for(int i=0;i<taggs.size();i++){
 				int cont=0;
-				String[] parts = taggs[i].split("_");
+				String[] parts = taggs.get(i).split("_");
 				String palabra = parts[0]; 
 				String categoria = parts[1];
-				
+			
 				//el string de categoría se lleva el espacio, por lo que debe eliminarse
 				categoria = categoria.replaceAll("\\s+",""); 
 
 
-				for(int k=0;k<taggs.length;k++){
+				for(int k=0;k<taggs.size();k++){
 					//no habrá diferencia entre palabras con letras mayúsculas y minúsculas
-					if(taggs[k].toLowerCase().equals(taggs[i].toLowerCase())){
+					if(taggs.get(k).toLowerCase().equals(taggs.get(i).toLowerCase())){
 						cont++;
 					}
 				}
