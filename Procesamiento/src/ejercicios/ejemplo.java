@@ -3,6 +3,7 @@ package ejercicios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 //IMPORTS DE LIBRERIA STANFORD
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
+
+import edu.stanford.nlp.ie.AbstractSequenceClassifier;
+import edu.stanford.nlp.ie.crf.*;
+import edu.stanford.nlp.io.IOUtils;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.sequences.DocumentReaderAndWriter;
+import edu.stanford.nlp.util.Triple;
 
 /**
  * Servlet implementation class ejemplo
@@ -44,8 +53,37 @@ public class ejemplo extends HttpServlet {
 		    //String taggs[]=new String[texto.length];
 
 		    ArrayList<String> taggs = new ArrayList<String>();
+		    ArrayList<String> entities=new ArrayList<String>();
 
-			//COPY DE EJEMPLO
+      		
+		    //Classifier
+
+		    String serializedClassifier = "C:/Users/Usuario/Desktop/Apache Tomcat/lib/classifiers/english.all.3class.distsim.crf.ser.gz";
+		    AbstractSequenceClassifier<CoreLabel> classifier;
+		    List<Triple<String, Integer, Integer>> listaEntidades;
+
+			try {
+				classifier = CRFClassifier.getClassifier(serializedClassifier);
+				
+				for(int i=0;i<texto.length;i++){
+				
+					String fileContents = texto[i];
+					
+				    listaEntidades = classifier.classifyToCharacterOffsets(fileContents);
+	
+				    for (Triple<String, Integer, Integer> item : listaEntidades) {
+		        		entities.add(fileContents.substring(item.second(), item.third())+"_"+item.first());
+		      		}
+			    
+				}
+
+			} catch (ClassCastException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		   
+
+			//Tagger
 			MaxentTagger tagger = new MaxentTagger(
 			 
 			"C:/Users/Usuario/Desktop/Apache Tomcat/lib/taggers/english-caseless-left3words-distsim.tagger");
@@ -79,6 +117,7 @@ public class ejemplo extends HttpServlet {
 			String respuesta="{\"palabras\" : [";
 			
 			for(int i=0;i<taggs.size();i++){
+				String entidad="";
 				int cont=0;
 				String[] parts = taggs.get(i).split("_");
 				String palabra = parts[0]; 
@@ -94,8 +133,23 @@ public class ejemplo extends HttpServlet {
 						cont++;
 					}
 				}
+
+				
+				for (int j=0;j<entities.size();j++) {
+					
+					String[] parts2 = entities.get(j).split("_");
+					String palabraEnt = parts2[0]; 
+					String ent = parts2[1];
+					//System.out.println(palabraEnt+":" +ent);
+					if(palabra.equals(palabraEnt)){
+						entidad=ent;
+						break;
+					}
+					
+		      	}
+			    
 	
-				respuesta+="{ \"palabra\" : \""+palabra+"\",\"categoria\" : \""+categoria+"\",\"repetida\": "+cont+"},";
+				respuesta+="{ \"palabra\" : \""+palabra+"\",\"categoria\" : \""+categoria+"\",\"repetida\": "+cont+",\"entidad\" : \""+entidad+"\"},";
 				
 
 		}

@@ -45,7 +45,7 @@
 					<h2>POS</h2>
 				</div>
 				<div class=col-md-12>
-					<form>
+					<form id="form-pos">
 						<div class="checkbox display-checkbox">
 							<label><input id="check1" type="checkbox" name="noun"><span id="noun">Nouns</span></label>
 						</div>
@@ -136,13 +136,13 @@
 					<h2>NER</h2>
 				</div>
 				<div class=col-md-12>
-					<form>
+					<form id="form-ner">
 						<div class="checkbox display-checkbox">
-							<label><input type="checkbox" name="check1">Localizations</label>
+							<label><input type="checkbox" name="location"><span id="location">Locations</span></label>
 						</div>
 
 						<div class="checkbox display-checkbox">
-							<label><input type="checkbox" name="check2">Organizations</label>
+							<label><input type="checkbox" name="person"><span id="person">Persons</span></label>
 						</div>
 					</form>
 				</div>
@@ -155,6 +155,7 @@
 
 <script src="resources/js/ejemploScript.js"></script>
 <script src="resources/js/pos.js"></script>
+<script src="resources/js/ner.js"></script>
 
 </body>
 </html>

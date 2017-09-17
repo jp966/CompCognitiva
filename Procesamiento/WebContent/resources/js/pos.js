@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	//var esClickeado=false;
-	$(document).on("change","input:checkbox",function(event){
+	$(document).on("change","#form-pos div label input:checkbox",function(event){
 		
 		event.preventDefault();
 
@@ -43,7 +43,6 @@ $(document).ready(function(){
 									var changing_value = arrayPalabras[i].split("_")[0];
 									var re;
 									var esQuote=false;
-									console.log(arrayPalabras[i].split("_")[0]);
 									//ya que POS categoriza las palabras anteriores al 's, y a este ultimo como dos distintas
 									if(arrayPalabras[i++].split("_")[0]=="'s"){
 										//se considera la palabra anterior al 's como una distinta

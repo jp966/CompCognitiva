@@ -122,7 +122,6 @@ public class pos extends HttpServlet {
 			array=new String[] {"PDT"};
 		}
 
-
 		if(tag.equals("particle")){
 			array=new String[] {"RP"};
 		}

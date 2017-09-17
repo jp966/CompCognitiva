@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="C:/Users/Usuario/Desktop/Apache Tomcat/lib/stanford-postagger.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Desktop/Apache Tomcat/lib/json-simple-1.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Desktop/Apache Tomcat/lib/org.json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Desktop/Apache Tomcat/lib/stanford-ner.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

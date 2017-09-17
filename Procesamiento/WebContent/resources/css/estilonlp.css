@@ -152,6 +152,23 @@ body{
 }
 /*FIN CLASES PARA TAGS*/
 
+/*CLASES PARA ENTIDADES*/
+
+.location, #location{
+	text-decoration: underline;
+	text-decoration-color: red;
+
+}
+
+
+.person, #person{
+	text-decoration: underline;
+	text-decoration-color: black;
+
+}
+
+/*FIN CLASES PARA ENTIDADES*/
+
 
 .display-checkbox{
 	display: inline-block;
