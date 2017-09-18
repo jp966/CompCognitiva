@@ -133,7 +133,6 @@ $(document).ready(function(){
 										
 									}else{
 										if(esQuote==false){
-											alert("se va a colorear algo");
 											return html.replace(re,
 											"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 										}

@@ -25,7 +25,8 @@ $(document).ready(function(){
 		//var punctuationless = nuevoContenido.replace(/[.,\/#!$%\^&\*;:{}=\_`~()/"/]/g,"");
 
 		//expresión regular para eliminar puntiación y otros simbolos
-		var punctuationless =nuevoContenido.replace(/[\.,\/#!$%\^&\*;:{}=\_`~()@\+\?><\[\]\+]/g," ");
+		// /[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+]/g
+		var punctuationless =nuevoContenido.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()/"@\+\?><\[\]\+]/g," ");
 		
 		//espacios en blanco multiples se reemplazan por uno simple
 		var finalString = punctuationless.replace(/\s{2,}/g," ");

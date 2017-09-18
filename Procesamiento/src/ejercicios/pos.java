@@ -3,6 +3,7 @@ package ejercicios;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -140,10 +141,14 @@ public class pos extends HttpServlet {
 		try {
 			JSONObject a = (JSONObject) parser.parse(new FileReader("C:/Users/Usuario/Desktop/Apache Tomcat/lib/json/archivo.json"));
 			
+			//arreglo repetidas
+			ArrayList<String> analizadas = new ArrayList<String>();
+			boolean estaRepetida=false;
+			
 			//arreglo de palabras del documento
 			JSONArray palabras = (JSONArray) a.get("palabras");
-			
-			for(int k=0;k<categorias.length;k++){			
+
+			for(int k=0;k<categorias.length;k++){	
 				if(tag.equals(categorias[k])){
 
 					String respuesta="";
@@ -152,70 +157,122 @@ public class pos extends HttpServlet {
 					String tagSiguiente=null;
 
 					for(int i=0;i<palabras.size();i++){
-						
-						JSONObject palabra1=(JSONObject) palabras.get(i);
-						
-						JSONObject palabraAnterior=null;
-						JSONObject palabraSiguiente=null;
-						//palabra anterior (aplicable al caso del 's)
+						JSONObject palabraTemp1=(JSONObject) palabras.get(i);
+						JSONObject palabraTemp1Anterior=null;
 						
 						if(i>0){
-							palabraAnterior=(JSONObject) palabras.get(i-1);
+							palabraTemp1Anterior=(JSONObject) palabras.get(i-1);
+						}
+
+						for(int m=0;m<analizadas.size();m++){
+							String contenido=(String)palabraTemp1.get("palabra");
+							String categoriaContenido=(String)palabraTemp1.get("categoria");
 							
-							String [] arrayTemp={"NN","NNS","NNP","NNPS"};
-							for(int l=0;l<4;l++){
-								
-								if(palabraAnterior.get("categoria").equals(arrayTemp[l])){
-									tagAnterior="noun";
+							//Si la palabra es un 's
+							if(contenido.equals("'s")){
+								if((contenido+"-"+categoriaContenido+"-"+palabraTemp1Anterior.get("palabra")).equals(analizadas.get(m))){
+									estaRepetida=true;
 									break;
 								}else{
-									tagAnterior="";
+									estaRepetida=false;
+								
+								}
+							}else{
+								if((contenido+"-"+categoriaContenido).equals(analizadas.get(m))){
+									estaRepetida=true;
+									break;
+								}else{
+									estaRepetida=false;
+								
 								}
 							}
 							
+						
 						}
 						
-						if(i<palabras.size()-2){
-							palabraSiguiente=(JSONObject) palabras.get(i+1);
+						
+						
+						if(estaRepetida==false){
+							JSONObject palabra1=(JSONObject) palabras.get(i);
 							
-							String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
-							for(int l=0;l<arrayTemp2.length;l++){
-								if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
-									tagSiguiente="pronoun";
-									break;
-								}else{
-									tagSiguiente="";
-								}
-							}
-
-						}
-
-						
-						String categoria=(String) palabra1.get("categoria");
-						
-						for(int j=0;j<array.length;j++){
-
-							if(categoria.equals(array[j])){
-								String palabra=(String) palabra1.get("palabra");
-								//Aqui podria hacer algo
-								//si lleva 's->'s_categoria_palabra
+							JSONObject palabraAnterior=null;
+							JSONObject palabraSiguiente=null;
+							//palabra anterior (aplicable al caso del 's)
+							
+							if(i>0){
+								palabraAnterior=(JSONObject) palabras.get(i-1);
 								
-								if(palabra.equals("'s")){
+								String [] arrayTemp={"NN","NNS","NNP","NNPS"};
+								String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
 
-									respuesta+=palabra+"_"+categorias[k]+"_"+palabraAnterior.get("palabra")+"_"+tagAnterior+",";
-								}else{
-									if(palabraSiguiente!=null){
-										respuesta+=palabra+"_"+categorias[k]+"_"+palabraSiguiente.get("palabra")+"_"+tagSiguiente+",";
+								for(int l=0;l<4;l++){
+									
+									if(palabraAnterior.get("categoria").equals(arrayTemp[l])){
+										tagAnterior="noun";
+										break;
 									}else{
-										//ultima palabra
-										respuesta+=palabra+"_"+categorias[k]+"_"+""+"_"+""+",";
-										
+										if(palabraAnterior.get("categoria").equals(arrayTemp2[l])){
+											tagAnterior="pronoun";
+											break;
+										}else{
+											tagAnterior="";
+										}	
 									}
-
 								}
-								break;
+								
 							}
-						}			
+							
+							if(i<palabras.size()-2){
+								palabraSiguiente=(JSONObject) palabras.get(i+1);
+								
+								String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
+								for(int l=0;l<arrayTemp2.length;l++){
+									if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
+										tagSiguiente="pronoun";
+										break;
+									}else{
+										tagSiguiente="";
+									}
+								}
+
+							}
+
+							
+							String categoria=(String) palabra1.get("categoria");
+							
+							for(int j=0;j<array.length;j++){
+
+								if(categoria.equals(array[j])){
+									//se agrega la repetida al array
+									String palabra=(String) palabra1.get("palabra");
+									//analizadas.add(palabra+"-"+palabra1.get("categoria"));
+									
+									//Aqui podria hacer algo
+									//si lleva 's->'s_categoria_palabra
+									
+									if(palabra.equals("'s")){
+
+										respuesta+=palabra+"_"+categorias[k]+"_"+palabraAnterior.get("palabra")+"_"+tagAnterior+",";
+										analizadas.add(palabra+"-"+palabra1.get("categoria")+"-"+palabraAnterior.get("palabra"));
+									}else{
+										analizadas.add(palabra+"-"+palabra1.get("categoria"));
+										if(palabraSiguiente!=null){
+											respuesta+=palabra+"_"+categorias[k]+"_"+palabraSiguiente.get("palabra")+"_"+tagSiguiente+",";
+										}else{
+											//ultima palabra
+											respuesta+=palabra+"_"+categorias[k]+"_"+""+"_"+""+",";
+											
+										}
+
+									}
+									break;
+								}
+							}	
+							
+							
+						}
+						
+						
 					}
 					
 					if(respuesta.length()>0){
@@ -223,6 +280,8 @@ public class pos extends HttpServlet {
 					}else{
 						respuesta="";
 					}
+
+					System.out.println(respuesta);
 					
 					response.setContentType("text/plain");
 					response.setCharacterEncoding("UTF-8");
