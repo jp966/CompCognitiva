@@ -148,15 +148,46 @@ public class pos extends HttpServlet {
 
 					String respuesta="";
 
+					String tagAnterior=null;
+					String tagSiguiente=null;
+
 					for(int i=0;i<palabras.size();i++){
 						
 						JSONObject palabra1=(JSONObject) palabras.get(i);
 						
-						JSONObject palabra2=null;
+						JSONObject palabraAnterior=null;
+						JSONObject palabraSiguiente=null;
 						//palabra anterior (aplicable al caso del 's)
 						
 						if(i>0){
-							palabra2=(JSONObject) palabras.get(i-1);
+							palabraAnterior=(JSONObject) palabras.get(i-1);
+							
+							String [] arrayTemp={"NN","NNS","NNP","NNPS"};
+							for(int l=0;l<4;l++){
+								
+								if(palabraAnterior.get("categoria").equals(arrayTemp[l])){
+									tagAnterior="noun";
+									break;
+								}else{
+									tagAnterior="";
+								}
+							}
+							
+						}
+						
+						if(i<palabras.size()-2){
+							palabraSiguiente=(JSONObject) palabras.get(i+1);
+							
+							String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
+							for(int l=0;l<arrayTemp2.length;l++){
+								if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
+									tagSiguiente="pronoun";
+									break;
+								}else{
+									tagSiguiente="";
+								}
+							}
+
 						}
 
 						
@@ -168,11 +199,19 @@ public class pos extends HttpServlet {
 								String palabra=(String) palabra1.get("palabra");
 								//Aqui podria hacer algo
 								//si lleva 's->'s_categoria_palabra
+								
 								if(palabra.equals("'s")){
-									respuesta+=palabra+"_"+categorias[k]+"_"+palabra2.get("palabra")+",";
-									System.out.println(palabra+"_"+categorias[k]+"_"+palabra2.get("palabra")+",");
+
+									respuesta+=palabra+"_"+categorias[k]+"_"+palabraAnterior.get("palabra")+"_"+tagAnterior+",";
 								}else{
-									respuesta+=palabra+"_"+categorias[k]+",";
+									if(palabraSiguiente!=null){
+										respuesta+=palabra+"_"+categorias[k]+"_"+palabraSiguiente.get("palabra")+"_"+tagSiguiente+",";
+									}else{
+										//ultima palabra
+										respuesta+=palabra+"_"+categorias[k]+"_"+""+"_"+""+",";
+										
+									}
+
 								}
 								break;
 							}

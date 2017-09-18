@@ -20,13 +20,26 @@ $(document).ready(function(){
   		contenido=event.target.result;
 
   		//ELIMINACIÓN DE PUNTUACIÓN
+  		//hay que dejar todo separado por un espacio y eliminar el ultimo si nada le sigue
   		var nuevoContenido = contenido;
-		var punctuationless = nuevoContenido.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()/"/]/g,"");
+		//var punctuationless = nuevoContenido.replace(/[.,\/#!$%\^&\*;:{}=\_`~()/"/]/g,"");
+
+		//expresión regular para eliminar puntiación y otros simbolos
+		var punctuationless =nuevoContenido.replace(/[\.,\/#!$%\^&\*;:{}=\_`~()@\+\?><\[\]\+]/g," ");
+		
+		//espacios en blanco multiples se reemplazan por uno simple
 		var finalString = punctuationless.replace(/\s{2,}/g," ");
+		//Se remueve cualquier espacio en blanco que quede al final
+		finalString=finalString.replace(/((\s*\S+)*)\s*/, "$1");
+		
 
 		var arrayContenido=finalString.split(" ");
   		
   		$("#textoDocumento").html(contenido);
+
+  		for(var i=0;i<arrayContenido.length;i++){
+  			console.log(arrayContenido[i]);
+  		}
   		
 /*
    		$.post("ejemplo",

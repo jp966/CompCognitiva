@@ -122,7 +122,7 @@ public class ejemplo extends HttpServlet {
 				String[] parts = taggs.get(i).split("_");
 				String palabra = parts[0]; 
 				String categoria = parts[1];
-			
+				System.out.println(palabra+" : "+categoria);
 				//el string de categoría se lleva el espacio, por lo que debe eliminarse
 				categoria = categoria.replaceAll("\\s+",""); 
 
@@ -157,6 +157,8 @@ public class ejemplo extends HttpServlet {
 		respuesta=respuesta.substring(0,respuesta.length()-1);
 
 		respuesta+="]}";
+
+
 		
 		//el json se guarda 
 		PrintWriter out = new PrintWriter("C:/Users/Usuario/Desktop/Apache Tomcat/lib/json/archivo.json");
