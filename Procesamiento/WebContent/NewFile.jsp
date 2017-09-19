@@ -104,7 +104,7 @@
 						</div>
 
 						<div class="checkbox display-checkbox">
-							<label><input type="checkbox" name="modal"><span id="modal">Modals</span></label>
+							<label><input type="checkbox" name="modalTag"><span id="modalTag">Modals</span></label>
 						</div>
 
 						<div class="checkbox display-checkbox">

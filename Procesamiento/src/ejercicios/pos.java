@@ -51,7 +51,7 @@ public class pos extends HttpServlet {
 
 		//arreglo con las categorías
 		String [] categorias ={"noun","adjective","verb","adverb","pronoun","conjunction","cardinalnum","determiner"
-			,"preposition","to","foreignword","possessive","existential","listItem","modal","predeterminer","particle","symbol",
+			,"preposition","to","foreignword","possessive","existential","listItem","modalTag","predeterminer","particle","symbol",
 			"interjection"};
 
 		if(tag.equals("noun")){
@@ -115,7 +115,7 @@ public class pos extends HttpServlet {
 			array=new String[] {"LS"};
 		}
 
-		if(tag.equals("modal")){
+		if(tag.equals("modalTag")){
 			array=new String[] {"MD"};
 		}
 
@@ -222,20 +222,38 @@ public class pos extends HttpServlet {
 								
 							}
 							
-							if(i<palabras.size()-2){
-								palabraSiguiente=(JSONObject) palabras.get(i+1);
-								
-								String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
-								for(int l=0;l<arrayTemp2.length;l++){
-									if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
-										tagSiguiente="pronoun";
-										break;
-									}else{
-										tagSiguiente="";
+							if(palabras.size()>2){
+								if(i<palabras.size()-2){
+									
+									palabraSiguiente=(JSONObject) palabras.get(i+1);
+									
+									String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
+									for(int l=0;l<arrayTemp2.length;l++){
+										if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
+											tagSiguiente="pronoun";
+											break;
+										}else{
+											tagSiguiente="";
+										}
+									}
+	
+								}
+							}else{
+								if(i==0){
+									palabraSiguiente=(JSONObject) palabras.get(i+1);
+									
+									String [] arrayTemp2={"PRP","PRP$","WP","WP$"};
+									for(int l=0;l<arrayTemp2.length;l++){
+										if(palabraSiguiente.get("categoria").equals(arrayTemp2[l])){
+											tagSiguiente="pronoun";
+											break;
+										}else{
+											tagSiguiente="";
+										}
 									}
 								}
-
 							}
+					
 
 							
 							String categoria=(String) palabra1.get("categoria");
@@ -250,7 +268,7 @@ public class pos extends HttpServlet {
 									//Aqui podria hacer algo
 									//si lleva 's->'s_categoria_palabra
 									
-									if(palabra.equals("'s")){
+									if(palabra.charAt(0)=='\''){
 
 										respuesta+=palabra+"_"+categorias[k]+"_"+palabraAnterior.get("palabra")+"_"+tagAnterior+",";
 										analizadas.add(palabra+"-"+palabra1.get("categoria")+"-"+palabraAnterior.get("palabra"));

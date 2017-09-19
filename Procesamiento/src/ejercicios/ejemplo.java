@@ -102,8 +102,16 @@ public class ejemplo extends HttpServlet {
 
 				if(splited.length>1){
 					taggs.remove(i);
-					taggs.add(splited[0]);
-					taggs.add(splited[1]);
+					if(splited.length>2){
+						//por alguna razon con ciertas palabras la comilla simple se separa de la palabra y se agrega al array
+						taggs.add(splited[0]);
+						taggs.add(splited[2]);
+					}else{
+
+						taggs.add(splited[0]);
+						taggs.add(splited[1]);
+					}
+
 				}
 
 				System.out.println(taggs.get(i));
@@ -140,7 +148,6 @@ public class ejemplo extends HttpServlet {
 					String[] parts2 = entities.get(j).split("_");
 					String palabraEnt = parts2[0]; 
 					String ent = parts2[1];
-					//System.out.println(palabraEnt+":" +ent);
 					if(palabra.equals(palabraEnt)){
 						entidad=ent;
 						break;

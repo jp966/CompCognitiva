@@ -75,17 +75,29 @@ $(document).ready(function(){
 										//return html.replace(re,
 										//"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 
+									}else{
+										if(arrayPalabras[i].split("_")[2].charAt(0)=='\''){
+											re = new RegExp("\\b" + changing_value,"g");
+											
+											if(tag_value=="pronoun"){
+												pronounPintada=true;
+											}else{
+												if(tag_value=="noun"){
+													nounPintada=true;
+												}
+											}
+
+										}
 									}
 								
 									//re = new RegExp("\\b" + changing_value + "\\b","g");
-									if(arrayPalabras[i].split("_")[0]=="'s"){
-										
-
+									if(arrayPalabras[i].split("_")[0].charAt(0)=='\''){
+									
 									//solo las 's poseen un tercer elemento en el arreglo (la palabra que la precede)
 									//investigar ->
 										esQuote=true;
+										alert(pronounPintada);
 										if(pronounPintada && arrayPalabras[i].split("_")[3]=="pronoun"){
-
 
 											re = new RegExp("<span class=\"pronoun\">"+arrayPalabras[i].split("_")[2]+"</span>"+changing_value + "\\b","g");
 
@@ -106,7 +118,6 @@ $(document).ready(function(){
 										//"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
 
 									}else{
-
 										re = new RegExp("\\b" + changing_value + "\\b","g");
 										//return html.replace(re,
 										//"<span class='"+arrayPalabras[i].split("_")[1]+"'>"+arrayPalabras[i].split("_")[0]+"</span>");
